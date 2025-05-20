@@ -15,6 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Category::Class);
         $query = Category::query();
         $categories = $query->paginate(10)->onEachSide(1);
         // dd($categories);
