@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;    
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,6 +26,14 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
+Route::middleware(['auth','verified'])->group(function () {
+    // Route::get('/dashboard', [DashboardController::class, 'index'])
+    //         ->name('dashboard');
+    
+    Route::resource('category', CategoryController::class);
+}); 
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
