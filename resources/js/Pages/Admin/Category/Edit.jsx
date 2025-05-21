@@ -6,7 +6,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, Link } from "@inertiajs/react";
 
 export default function Create({auth, category}){
-        console.log(category)
     const {data,setData, post, errors, reset} = useForm({
         name: category.name||'',
         description: category.description ||'',
@@ -28,7 +27,7 @@ export default function Create({auth, category}){
                 </h2>
             }
         >
-        <Head title="Create Catetegory" />
+        <Head title="Edit Catetegory" />
 
         <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

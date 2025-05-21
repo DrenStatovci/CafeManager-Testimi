@@ -7,7 +7,6 @@ import { Link } from '@inertiajs/react';
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -25,11 +24,20 @@ export default function Authenticated({ user, header, children }) {
                                     Dashboard
                                 </NavLink>
                             </div>
+                            {user.role === 'admin' && (
+                                <>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href={route('user.index')} active={route().current('user.index')}>
+                                    Staff
+                                </NavLink>
+                            </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('category.index')} active={route().current('category.index')}>
                                     Categories
                                 </NavLink>
                             </div>
+                            </>
+                            )}
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">

@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $query = Category::query();
         $categories = $query->paginate(10)->onEachSide(1);
         // dd($categories);
-        return inertia('Category/Index', [
+        return inertia('Admin/Category/Index', [
                 'categories' => CategoryResource::collection($categories),
                 'success' => session('success')    
         ]);
@@ -32,7 +32,7 @@ class CategoryController extends Controller
     public function create()
     {
         $this->authorize('create', Category::class);
-        return inertia('Category/Create');
+        return inertia('Admin/Category/Create');
     }
 
     /**
@@ -61,7 +61,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $this->authorize('update', $category);
-        return inertia('Category/Edit', [
+        return inertia('Admin/Category/Edit', [
                 'category' => new CategoryResource($category),
                 ]);
     }

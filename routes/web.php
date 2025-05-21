@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;    
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,7 +20,9 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Auth/Login', [
+        'canResetPassword' => Route::has('password.request'),
+        'status' => session('status'),
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -33,6 +36,8 @@ Route::middleware(['auth','verified'])->group(function () {
     //         ->name('dashboard');
     
     Route::resource('category', CategoryController::class);
+
+    Route::resource('user', UserController::class);
 }); 
 
 Route::get('/dashboard', function () {
