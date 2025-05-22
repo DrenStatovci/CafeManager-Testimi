@@ -48,10 +48,11 @@ export default function Index({auth,products, queryParams = null, success}){
          user={auth.user}
          header={<div className="flex justify-between text-center">
                     <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Products</h2>
+                    {auth.user.role !== 'waiter' &&
                     <Link href={route('product.create')} 
                     className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
                         Add New
-                    </Link>
+                    </Link>}
                 </div>}>
 
             <Head title="Products"/>
@@ -107,7 +108,9 @@ export default function Index({auth,products, queryParams = null, success}){
                                             >
                                                 Created At
                                             </TableHeading>
+                                            {auth.user.role !== "waiter" &&
                                             <th className="px-3 py-2">Actions</th>
+                                            }
                                         </tr>
                                     </thead>
 
@@ -128,7 +131,8 @@ export default function Index({auth,products, queryParams = null, success}){
                                             <th className="px-3 py-2"></th>
                                             <th className="px-3 py-2"></th>
                                             <th className="px-3 py-2"></th>
-                                            <th className="px-3 py-2"></th>
+                                            {auth.user.role !== "waiter" &&
+                                            <th className="px-3 py-2"></th>}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -146,6 +150,7 @@ export default function Index({auth,products, queryParams = null, success}){
                                             <td className="px-3 py-2">{product.category.name}</td>
                                             <td className="px-3 py-2">{product.price}€</td>
                                             <td className="px-3 py-2">{product.created_at}</td>
+                                            {auth.user.role !== 'waiter'  &&
                                             <td className="px-3 py-2 text-nowrap">
                                                 <Link
                                                     href={route('product.edit', product.id)}
@@ -158,6 +163,7 @@ export default function Index({auth,products, queryParams = null, success}){
                                                         Delete  
                                                 </button>
                                             </td>
+                                            }
                                         </tr>
                                         )}
                                     </tbody>

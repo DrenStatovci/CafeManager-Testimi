@@ -87,6 +87,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $this->authorize('update', $product);
         $categories = Category::query()->orderBy('name', 'asc')->get();
         return inertia('Product/Edit', [
             'product' => $product,
@@ -99,6 +100,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
+        $this->authorize('update', $product);
+
         $data = $request->validated();
         $image = $data['image'] ?? null;
 
@@ -118,6 +121,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
         $product->delete();
         if($product->image_path){
             Storage::disk('public')->deleteDirectory(dirname($product->image_path));
