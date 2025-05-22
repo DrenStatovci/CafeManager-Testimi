@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;    
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ Route::get('/', function () {
         'canResetPassword' => Route::has('password.request'),
         'status' => session('status'),
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        // 'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -38,6 +39,8 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::resource('category', CategoryController::class);
 
     Route::resource('user', UserController::class);
+
+    Route::resource('product', ProductController::class);
 }); 
 
 Route::get('/dashboard', function () {
