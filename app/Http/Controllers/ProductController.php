@@ -25,9 +25,6 @@ class ProductController extends Controller
         if(request('name')) {
             $query->where('name', 'like', '%' . request('name') . '%');
         }
-        if(request('category_id')) {
-            $query->where('category_id', request('category_id'));
-        }
 
         $products = $query
                 ->orderBy($sortField, $sortDirection)

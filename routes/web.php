@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;    
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -41,6 +42,12 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::resource('user', UserController::class);
 
     Route::resource('product', ProductController::class);
+
+    Route::resource('order', OrderController::class);
+    Route::post('/order/{order}/complete', [OrderController::class, 'complete'])
+        ->name('order.complete');
+        Route::post('/order/{order}/pay', [OrderController::class, 'pay'])
+        ->name('order.pay');
 }); 
 
 Route::get('/dashboard', function () {
