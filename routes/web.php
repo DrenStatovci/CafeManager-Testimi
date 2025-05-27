@@ -46,7 +46,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::resource('order', OrderController::class);
     Route::post('/order/{order}/complete', [OrderController::class, 'complete'])
         ->name('order.complete');
-        Route::post('/order/{order}/pay', [OrderController::class, 'pay'])
+    Route::post('/order/{order}/pay', [OrderController::class, 'pay'])
         ->name('order.pay');
 }); 
 
