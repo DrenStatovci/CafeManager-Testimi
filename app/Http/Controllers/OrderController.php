@@ -16,12 +16,22 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+
         $query = Order::query();
         $sortField = request('sort_field', "created_at");
         $sortDirection = request('sort_direction', "desc");
 
         if(request('status')) {
             $query->where('status', request('status'));
+        }
+
+        if($user->role === "bartender"){
+            $query->where('status','pending');
+        }
+
+        if($user->role === "waiter"){
+            $query->where('user_id', $user->id);
         }
 
         $orders = $query->with(['waiter', 'table', 'items.product'])
@@ -73,7 +83,7 @@ class OrderController extends Controller
                 $total += $lineTotal;
             }
             $order->update(['total' => $total]);
-            $order->table->update(['status' => 'occupied']);
+            $order->table()->update(['status' => 'occupied']);
         });
 
         return to_route('order.index')->with('success', 'Order was created');
@@ -97,7 +107,12 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $order->load(['waiter', 'table', 'items.product']);
+        // dd($order->table->name);
+
+        return inertia('Order/Show', [
+            'order' => new OrderResource($order)
+        ]);
     }
 
     /**
@@ -105,7 +120,15 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $order->load(['items.product']);
+
+        return inertia('Order/Edit', [
+            'order' => new OrderResource($order),
+            'tables' => Table::where('status', 'free')
+                ->orWhere('id', $order->table_id)
+                ->get(),
+            'products' => Product::all()
+        ]);
     }
 
     /**
@@ -113,7 +136,62 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $data = $request->validated();
+
+        \DB::transaction(function () use ($data, $order){
+            $oldTableId = $order->table_id;
+            $newTableId = $data['table_id'];
+
+            $order->update([
+                'table_id' => $data['table_id'],
+                'status' => $data['status']
+            ]);
+
+            if($oldTableId !== $newTableId){
+                Table::where('id', $oldTableId)->update(['status' => 'free']);
+                Table::where('id', $newTableId)->update(['status' => 'occupied']);
+            }
+
+            $incomingIds = collect($data['items'])
+                ->pluck('id')
+                ->filter()
+                ->all();
+
+            $order->items()
+                ->whereNotIn('id', $incomingIds)
+                ->delete();
+
+            foreach($data['items'] as $itemData){
+                $unitPrice = Product::findOrFail($itemData['product_id'])->price;
+
+                if(!empty($itemData['id'])){
+                    $order->items()
+                        ->where('id', $itemData['id'])
+                        ->update([
+                            'product_id'=> $itemData['product_id'],
+                            'quantity' => $itemData['quantity'],
+                            'unit_price' => $unitPrice
+                        ]);
+                }else{
+                    $order->items()->create([
+                        'product_id' => $itemData['product_id'],
+                        'quantity' => $itemData['quantity'],
+                        'unit_price' => $unitPrice
+                    ]);
+                }
+            }
+            
+            
+            $total = $order->items()
+                ->get()
+                ->sum(fn($i) => $i->quantity * $i->unit_price);
+
+            $order->update(['total' => $total]);
+            
+
+        });
+
+        return to_route('order.index')->with('success', 'Order was updated');
     }
 
     /**
