@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreReservationRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreReservationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,17 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'costumer_name' => ['required','string', 'max:255'],
+            'costumer_phone' => ['nullable','string', 'max:20'],
+            'reservation_date' => ['required','date', 'after_or_equal:now'],
+            'party_size' => ['required','integer', 'min:1'],
+            'table_id' => ['required', 'interger', 'exists:tables,id'],
+            'status' => ['sometimes', Rule::in([
+                            'pending',
+                            'confirmed',
+                            'seated',
+                            'canceled'
+                        ])]
         ];
     }
 }

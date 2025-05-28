@@ -23,6 +23,7 @@ class UpdateOrderRequest extends FormRequest
     {
         return [
             'table_id' => ['required', 'exists:tables,id'],
+            'status' => ['required', 'in:pending,paid,completed'],
             'items' => ['required', 'array'],
             'items.*.product_id' => ['required', 'exists:products,id'],
             'items.*.quantity' => ['required', 'numeric'],
