@@ -17,13 +17,24 @@ class ReservationController extends Controller
     {
         $query = Reservation::query();
 
+        $sortField = request('sort_field', "created_at");
+        $sortDirection = request('sort_direction', "desc");
+
         if(request('status')){
             $query->where('status', request('status'));
         }
+        if(request('costumer_name')){
+            $query->where('costumer_name', 'like', '%' . request('costumer_name') . '%');
+        }
+        if(request('date')){
+            $query->whereDate('reservation_date',request('date'));
+        }
 
         $reservations = $query->with('table')
-            ->orderBy('created_at', 'desc')
-            ->paginate()
+            ->where ('status', '!=', 'completed')
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(10)
+            ->onEachSide(1)
             ->withQueryString();
         
             return inertia('Reservation/Index', [
@@ -47,12 +58,12 @@ class ReservationController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreReservationRequest $request)
-    {
+    {   
         $data = $request->validated();
-
+        
         \DB::transaction(function () use ($data, &$reservation) {
         $reservation = Reservation::create($data);
-        $reservation->table()->update(['status' => 'occupied']);
+        $reservation->table()->update(['status' => 'reserved']);
         });
 
         return to_route('reservation.index')->with('success', 'Reservation was created');
@@ -93,18 +104,29 @@ class ReservationController extends Controller
     public function update(UpdateReservationRequest $request, Reservation $reservation)
     {
         $data = $request->validated();
-
         $oldTableId = $reservation->table_id;
         $newTableId = $data['table_id'];
 
         if($newTableId !== $oldTableId){
-            Table::where('table_id', $oldTableId)->update(['status' => 'free']);
-            Table::where('table_id',$newTableId)->update(['status' => 'occupied']);
+            Table::where('id', $oldTableId)->update(['status' => 'free']);
+            Table::where('id',$newTableId)->update(['status' => 'reserved']);
+        }
+        if($data['status'] === 'seated'){
+            Table::where('id', $newTableId)->update(['status' => 'occupied']);
+        }
+
+        if($data['status'] === 'completed'){
+            Table::where('id', $newTableId)->update(['status' => 'free']);
+        }
+
+        if($data['status'] === 'canceled'){
+            Table::where('id', $newTableId)->update(['status' => 'free']);
+            $reservation->delete();
         }
 
         $reservation->update($data);
 
-        return to_route('reservation.index')->where()->with('success', 'Reservation was updated');
+        return to_route('reservation.index')->with('success', 'Reservation was updated');
        
     }
 

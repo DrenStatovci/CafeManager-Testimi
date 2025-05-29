@@ -4,9 +4,11 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class ReservationResource extends JsonResource
 {
+    public static $wrap = false;
     /**
      * Transform the resource into an array.
      *
@@ -25,8 +27,7 @@ class ReservationResource extends JsonResource
                 'id' => $this->table->id,
                 'number' => $this->table->number,
             ],
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            'created_at' => (new Carbon($this->created_at))->format('d-m-Y')
             
         ];
     }

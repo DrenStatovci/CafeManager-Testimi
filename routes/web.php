@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,6 +49,8 @@ Route::middleware(['auth','verified'])->group(function () {
         ->name('order.complete');
     Route::post('/order/{order}/pay', [OrderController::class, 'pay'])
         ->name('order.pay');
+
+    Route::resource('reservation', ReservationController::class);
 }); 
 
 Route::get('/dashboard', function () {

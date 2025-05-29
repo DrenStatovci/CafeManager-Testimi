@@ -26,12 +26,13 @@ class UpdateReservationRequest extends FormRequest
             'costumer_name' => ['required','string', 'max:255'],
             'costumer_phone' => ['nullable','string', 'max:20'],
             'reservation_date' => ['required','date', 'after_or_equal:now'],
-            'party_size' => ['required','integer', 'min:1'],
-            'table_id' => ['required', 'interger', 'exists:tables,id'],
+            'guest_number' => ['required','integer', 'min:1, max:10'],
+            'table_id' => ['required', 'integer', 'exists:tables,id'],
             'status' => ['required', Rule::in([
                             'pending',
                             'confirmed',
                             'seated',
+                            'completed',
                             'canceled'
                         ])]
         ];

@@ -126,6 +126,14 @@ export default function Index({ auth, orders, queryParams = null, success }) {
                       >
                         Created At
                       </TableHeading>
+                      <TableHeading
+                        name="created_at"
+                        sort_field={queryParams.sort_field}
+                        sort_direction={queryParams.sort_direction}
+                        sortChanged={sortChanged}
+                      >
+                        Updated At
+                      </TableHeading>
                       <th className="px-3 py-2">Actions</th>
                     </tr>
                   </thead>
@@ -151,6 +159,7 @@ export default function Index({ auth, orders, queryParams = null, success }) {
                       </th>
                       <th className="px-3 py-2"></th>
                       <th className="px-3 py-2"></th>
+                      <th className="px-3 py-2"></th>
                     </tr>
                   </thead>
 
@@ -173,6 +182,7 @@ export default function Index({ auth, orders, queryParams = null, success }) {
                           </span>
                         </td>
                         <td className="px-3 py-2">{order.created_at}</td>
+                        <td className="px-3 py-2">{order.updated_at}</td>
                         <td className="px-3 py-2 space-x-2">
                           {(auth.user.role === "bartender" || auth.user.role === "admin")   && order.status === "pending" && (
                             <button

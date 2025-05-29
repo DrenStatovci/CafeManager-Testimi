@@ -19,10 +19,10 @@ class Reservation extends Model
     ];
 
      protected $casts = [
-        'reservation_time' => 'datetime',
+        'reservation_date' => 'datetime',
     ];
 
     public function table(){
-        $this->belongsTo(Table::class);
+        return  $this->belongsTo(Table::class);
     }
 }

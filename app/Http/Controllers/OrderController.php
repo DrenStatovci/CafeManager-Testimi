@@ -17,11 +17,10 @@ class OrderController extends Controller
     public function index()
     {
         $user = auth()->user();
-
         $query = Order::query();
         $sortField = request('sort_field', "created_at");
         $sortDirection = request('sort_direction', "desc");
-
+        
         if(request('status')) {
             $query->where('status', request('status'));
         }
@@ -52,7 +51,7 @@ class OrderController extends Controller
     public function create()
     {
         return inertia('Order/Create', [
-            'tables' => Table::where('status', 'free')->get(),
+            'tables' => Table::all(),
             'products' => Product::all()
         ]);
     }
@@ -83,7 +82,7 @@ class OrderController extends Controller
                 $total += $lineTotal;
             }
             $order->update(['total' => $total]);
-            $order->table()->update(['status' => 'occupied']);
+            // $order->table()->update(['status' => 'occupied']);
         });
 
         return to_route('order.index')->with('success', 'Order was created');
@@ -124,9 +123,7 @@ class OrderController extends Controller
 
         return inertia('Order/Edit', [
             'order' => new OrderResource($order),
-            'tables' => Table::where('status', 'free')
-                ->orWhere('id', $order->table_id)
-                ->get(),
+            'tables' => Table::all(),
             'products' => Product::all()
         ]);
     }
@@ -147,10 +144,10 @@ class OrderController extends Controller
                 'status' => $data['status']
             ]);
 
-            if($oldTableId !== $newTableId){
-                Table::where('id', $oldTableId)->update(['status' => 'free']);
-                Table::where('id', $newTableId)->update(['status' => 'occupied']);
-            }
+            // if($oldTableId !== $newTableId){
+            //     Table::where('id', $oldTableId)->update(['status' => 'free']);
+            //     Table::where('id', $newTableId)->update(['status' => 'occupied']);
+            // }
 
             $incomingIds = collect($data['items'])
                 ->pluck('id')
