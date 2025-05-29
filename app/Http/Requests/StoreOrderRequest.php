@@ -25,7 +25,7 @@ class StoreOrderRequest extends FormRequest
             'table_id' => ['required', 'exists:tables,id'],
             'items' => ['required', 'array'],
             'items.*.product_id' => ['required', 'exists:products,id'],
-            'items.*.quantity' => ['required', 'numeric'],
+            'items.*.quantity' => ['required', 'numeric', 'min:1', 'max:20'],
         ];
     }
 }

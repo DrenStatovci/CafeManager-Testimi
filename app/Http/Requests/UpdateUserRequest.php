@@ -28,9 +28,16 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             "email"=> ['required','email', 
                 Rule::unique('users')->ignore($user->id)],
-            'phone_number' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:255', 'regex:/^\+?[1-9]\d{1,14}$/'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'role' => ['required', 'in:admin,waiter,bartender'], 
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone_number.regex' => 'The phone number must be in international E.164 format, e.g. +383641234567.',
         ];
     }
 }

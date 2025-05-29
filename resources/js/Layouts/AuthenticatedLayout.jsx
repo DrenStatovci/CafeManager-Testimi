@@ -36,18 +36,23 @@ export default function Authenticated({ user, header, children }) {
                                     Staff
                                 </NavLink>
                             </div>
+                            </>
+                            )}
+                            {(user.role ==='admin' || user.role === 'bartender')&& 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('category.index')} active={route().current('category.index')}>
                                     Categories
                                 </NavLink>
                             </div>
+                            }
+                            
+                            {(user.role === 'admin' || user.role === 'waiter') &&
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink href={route('reservation.index')} active={route().current('reservation.index')}>
                                     Reservation
                                 </NavLink>
                             </div>
-                            </>
-                            )}
+                            }
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">

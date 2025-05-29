@@ -24,9 +24,9 @@ class UpdateReservationRequest extends FormRequest
     {
         return [
             'costumer_name' => ['required','string', 'max:255'],
-            'costumer_phone' => ['nullable','string', 'max:20'],
+            'costumer_phone' => ['nullable','string', 'max:20', 'regex:/^\+?[1-9]\d{1,14}$/'],
             'reservation_date' => ['required','date', 'after_or_equal:now'],
-            'guest_number' => ['required','integer', 'min:1, max:10'],
+            'guest_number' => ['required','integer', 'min:1', 'max:10'],
             'table_id' => ['required', 'integer', 'exists:tables,id'],
             'status' => ['required', Rule::in([
                             'pending',
@@ -35,6 +35,13 @@ class UpdateReservationRequest extends FormRequest
                             'completed',
                             'canceled'
                         ])]
+        ];
+    }
+
+        public function messages(): array
+    {
+        return [
+            'costumer_phone.regex' => 'The phone number must be in international E.164 format, e.g. +383641234567.',
         ];
     }
 }
