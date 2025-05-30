@@ -70,6 +70,7 @@ export default function Edit({auth, order, tables, products}) {
                             <SelectInput
                                 id="table_id"
                                 name="table_id"
+                                dusk="table_id"
                                 value={data.table_id}
                                 className="mt-1 block w-full"
                                 onChange = {e=>setData('table_id', e.target.value)}
@@ -91,6 +92,7 @@ export default function Edit({auth, order, tables, products}) {
                                         <SelectInput
                                             id="product_id"
                                             name="product_id"
+                                            dusk={`product_id_${index}`}
                                             value={item.product_id}
                                             className="flex-1"
                                             onChange={e =>updateItem(index,'product_id', e.target.value)}
@@ -104,6 +106,7 @@ export default function Edit({auth, order, tables, products}) {
                                         </SelectInput>
                                         <TextInput 
                                             name="quantity"
+                                            dusk={`quantity_${index}`}
                                             type="number"
                                             min="1"
                                             value={item.quantity}
@@ -112,6 +115,7 @@ export default function Edit({auth, order, tables, products}) {
                                         />
 
                                         <button 
+                                            dusk={`remove-item-${index}`}
                                             type="button"
                                             onClick={()=> removeItem(index)}
                                             className="text-red-600 hover:text-red-800"
@@ -122,6 +126,7 @@ export default function Edit({auth, order, tables, products}) {
                                 ))}
                                 <button
                                     type="button"
+                                    dusk="add-item"
                                     onClick={addItem}
                                     className="mt-3 text-blue-600 hover:text-blue-800"
                                 >

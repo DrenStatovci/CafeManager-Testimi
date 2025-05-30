@@ -75,7 +75,7 @@ export default function Index({ auth, orders, queryParams = null, success }) {
           <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900 dark:text-gray-100">
               <div className="overflow-auto">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" dusk="order-table">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                     <tr className="whitespace-nowrap">
                       <TableHeading

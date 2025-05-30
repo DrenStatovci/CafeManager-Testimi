@@ -40,7 +40,7 @@ class ProductTest extends DuskTestCase
                 ->type('@description', 'Pije freskuese')
                 ->type('@price', '1.99')
                 ->select('@category_id', $category->id)
-                ->attach('@image', __DIR__.'/screenshots/produkt1.png')
+                ->attach('@image', __DIR__.'/img/produkt1.png')
                 ->press('Create')
                 ->waitFor('@product-table')
                 ->assertPathIs('/product')
