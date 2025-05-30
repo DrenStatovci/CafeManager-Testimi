@@ -17,7 +17,8 @@ class TableFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'number' => $this->faker->numberBetween(1, 15),
+            'status' => $this->faker->randomElement(['free', 'occupied','reserved']),
         ];
     }
 }

@@ -55,6 +55,7 @@ export default function Edit({ auth, user }) {
                 <TextInput
                   id="name"
                   name="name"
+                  dusk="name"
                   value={data.name}
                   onChange={(e) => setData("name", e.target.value)}
                   className="mt-1 block w-full"
@@ -69,6 +70,7 @@ export default function Edit({ auth, user }) {
                   id="phone_number"
                   type="text"
                   name="phone_number"
+                  dusk="phone_number"
                   value={data.phone_number}
                   onChange={(e) => setData("phone_number", e.target.value)}
                   className="mt-1 block w-full"
@@ -84,6 +86,7 @@ export default function Edit({ auth, user }) {
                   id="email"
                   type="email"
                   name="email"
+                  dusk="email"
                   value={data.email}
                   onChange={(e) => setData("email", e.target.value)}
                   className="mt-1 block w-full"
@@ -99,6 +102,7 @@ export default function Edit({ auth, user }) {
                   id="password"
                   type="password"
                   name="password"
+                  dusk="password"
                   value={data.password}
                   onChange={(e) => setData("password", e.target.value)}
                   className="mt-1 block w-full"
@@ -117,6 +121,7 @@ export default function Edit({ auth, user }) {
                   id="password_confirmation"
                   type="password"
                   name="password_confirmation"
+                  dusk="password_confirmation"
                   value={data.password_confirmation}
                   onChange={(e) =>
                     setData("password_confirmation", e.target.value)
@@ -136,6 +141,7 @@ export default function Edit({ auth, user }) {
                 <SelectInput
                   id="role"
                   name="role"
+                  dusk="role"
                   value={data.role}
                   onChange={(e) => setData("role", e.target.value)}
                   className="mt-1 block w-full rounded border-gray-300"

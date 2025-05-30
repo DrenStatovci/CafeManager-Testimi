@@ -63,6 +63,7 @@ export default function Create({ auth, tables, products }) {
                 <SelectInput
                   id="table_id"
                   name="table_id"
+                  dusk="table_id"
                   value={data.table_id}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("table_id", e.target.value)}
@@ -84,6 +85,7 @@ export default function Create({ auth, tables, products }) {
                   <div key={index} className="flex space-x-2 mt-2">
                     <SelectInput
                       name="product_id"
+                      dusk={`product_id_${index}`}
                       value={item.product_id}
                       className="flex-1"
                       onChange={(e) => updateItem(index, "product_id", e.target.value)}
@@ -97,6 +99,7 @@ export default function Create({ auth, tables, products }) {
                     </SelectInput>
                     <TextInput
                       name="quantity"
+                      dusk={`quantity_${index}`}
                       type="number"
                       min="1"
                       value={item.quantity}
@@ -114,6 +117,7 @@ export default function Create({ auth, tables, products }) {
                 ))}
                 <button
                   type="button"
+                  dusk="add-item"
                   onClick={addItem}
                   className="mt-3 text-blue-600 hover:text-blue-800"
                 >

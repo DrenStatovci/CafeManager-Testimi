@@ -46,6 +46,7 @@ export default function Edit({auth,product, categories}){
                                         id = "product_image_path"
                                         type="file"
                                         name="image"
+                                        dusk="image"
                                         className="mt-1 block w-full"
                                         onChange={e=> setData('image', e.target.files[0])}
                                     />
@@ -60,6 +61,7 @@ export default function Edit({auth,product, categories}){
                                         id = "product_name"
                                         type="text"
                                         name="name"
+                                        dusk="name"
                                         value={data.name}
                                         className="mt-1 block w-full"
                                         onChange={e=> setData('name', e.target.value)}
@@ -75,6 +77,7 @@ export default function Edit({auth,product, categories}){
                                         id = "product_description"
                                         type="text"
                                         name="description"
+                                        dusk="description"
                                         value={data.description}
                                         className="mt-1 block w-full"
                                         onChange={e=> setData('description', e.target.value)}
@@ -90,6 +93,7 @@ export default function Edit({auth,product, categories}){
                                         id = "product_price"
                                         type="number"
                                         name="price"
+                                        dusk="price"
                                         value={data.price}
                                         className="mt-1 block w-full"
                                         onChange={e=> setData('price', e.target.value)}
@@ -104,6 +108,7 @@ export default function Edit({auth,product, categories}){
                                     <SelectInput
                                         id="product_category"
                                         name="category_id"
+                                        dusk="category_id"
                                         value={data.category_id}
                                         className="mt-1 block w-full"
                                         onChange={e => setData('category_id', e.target.value)}
@@ -129,7 +134,7 @@ export default function Edit({auth,product, categories}){
 
                                     <button className="bg-emerald-500 py-1 px-3 rounded text-white shadow
                                         transition-all hover:bg-emerald-600">
-                                        Create
+                                        Update
                                     </button>
                                 </div>
                             </form> 
