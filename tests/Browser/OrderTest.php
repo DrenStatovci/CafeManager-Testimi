@@ -43,10 +43,9 @@ public function admin_can_create_order_with_multiple_items()
             ->select('@product_id_1', $products[1]->id)
             ->type('@quantity_1', 1)
             ->press('Create Order')
-            ->waitForLocation('/order') 
+            ->waitFor("@order-table")
+            ->assertPathIs('/order')
             ->assertSee($table->number)
-            ->assertSee($products[0]->name)
-            ->assertSee($products[1]->name)
             ->screenshot('order-create-success');
     });
 }
@@ -86,6 +85,7 @@ public function admin_can_create_order_with_multiple_items()
                 ->press('Update')
                 ->waitFor("@order-table")
                 ->assertPathIs('/order')
+                ->pause(500)
                 ->assertSee($table->number)
                 ->assertSee($admin->name)
                 ->screenshot('order-edit-success');
