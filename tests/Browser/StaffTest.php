@@ -16,7 +16,6 @@ class StaffTest extends DuskTestCase
     /** @test */
     public function admin_can_create_staff()
     {
-        // Krijo një admin user me factory ose përdor ekzistuesin me id=1
         $admin = User::factory()->create([
             'role' => 'admin',
             'email' => 'admin@gmail.com',
@@ -43,7 +42,7 @@ class StaffTest extends DuskTestCase
         });
     }
 
-    // /** @test */
+     /** @test */
     public function admin_can_edit_staff()
     {
         $admin = User::factory()->create([

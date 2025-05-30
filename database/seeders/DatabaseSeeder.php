@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +29,8 @@ class DatabaseSeeder extends Seeder
             'password'=> bcrypt('12345678'),
             'role'=> 'admin'
         ]);
+
+        Category::factory(5)->hasProducts(3)->create();
 
         $this->call([
             CategorySeeder::class,
