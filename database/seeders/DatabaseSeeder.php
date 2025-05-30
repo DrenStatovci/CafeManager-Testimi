@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             'role'=> 'admin'
         ]);
 
-        Category::factory(5)->hasProducts(3)->create();
 
         $this->call([
             CategorySeeder::class,
