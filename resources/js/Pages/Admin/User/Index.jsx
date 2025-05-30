@@ -34,7 +34,7 @@ export default function Index({auth,users, success}){
                     <div className="p-6 text-gray-900 dark:text-gray-100">
                         <div className="overflow-auto">
                             <table className="w-full text-sm text-left rtl:text-right text-gray-500
-                                            dark:text-gray-400">
+                                            dark:text-gray-400" dusk="user-table">
                                 <thead className="text-xs text-gray-700 uppercase bg-gray-50
                                                 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                                     <tr className="text-nowrap">
@@ -99,6 +99,7 @@ export default function Index({auth,users, success}){
                                             </Link>
                                             {user.role !== 'admin' &&
                                                 <button
+                                                dusk={`delete-user-${user.id}`}
                                                 onClick={(e)=> deleteUser(user)}
                                                 className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1" >
                                                     Delete  
