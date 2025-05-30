@@ -105,4 +105,4 @@ class ProductTest extends DuskTestCase
                 ->screenshot('product-delete-success');
         });
     }
-}
+} 

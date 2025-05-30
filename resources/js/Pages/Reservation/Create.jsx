@@ -44,6 +44,7 @@ export default function Create({ auth, tables }) {
                 <SelectInput
                   id="table_id"
                   name="table_id"
+                  dusk="table_id"
                   value={data.table_id}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("table_id", e.target.value)}
@@ -64,6 +65,7 @@ export default function Create({ auth, tables }) {
                 <TextInput
                   id="costumer_name"
                   name="costumer_name"
+                  dusk="costumer_name"
                   value={data.costumer_name}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("costumer_name", e.target.value)}
@@ -77,6 +79,7 @@ export default function Create({ auth, tables }) {
                 <TextInput
                   id="costumer_phone"
                   name="costumer_phone"
+                  dusk="costumer_phone"
                   value={data.costumer_phone}
                   className="mt-1 block w-full"
                   onChange={(e) => setData("costumer_phone", e.target.value)}
@@ -93,6 +96,7 @@ export default function Create({ auth, tables }) {
                 <TextInput
                   id="reservation_date"
                   name="reservation_date"
+                  dusk="reservation_date"
                   type="datetime-local"
                   value={data.reservation_date}
                   className="mt-1 block w-full"
@@ -128,6 +132,7 @@ export default function Create({ auth, tables }) {
                 <TextInput
                   id="guest_number"
                   name="guest_number"
+                  dusk="guest_number"
                   type="number"
                   min="1"
                   value={data.guest_number}

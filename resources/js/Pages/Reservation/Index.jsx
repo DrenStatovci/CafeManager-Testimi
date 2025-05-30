@@ -155,7 +155,7 @@ export default function Index({ auth, reservations, queryParams = {}, success })
         </div>
 
         {/* Card Grid */}
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" dusk="reservation-table"> 
           {reservations.data.map((r) => (
             <div
               key={r.id}
@@ -189,6 +189,7 @@ export default function Index({ auth, reservations, queryParams = {}, success })
 
               <div className="pt-2 border-t flex justify-end space-x-2">
                 <button
+                  dusk={`delete-reservation-${r.id}`}
                   onClick={() => cancelReservation(r)}
                   className="text-red-600 hover:underline text-sm"
                 >
